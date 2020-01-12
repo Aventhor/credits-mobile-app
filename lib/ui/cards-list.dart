@@ -2,8 +2,6 @@ import 'package:credits/models/company.dart';
 import 'package:flutter/material.dart';
 import 'package:credits/ui/card/company-card.dart';
 import 'package:credits/data.dart';
-import 'package:credits/helpers/geolacator.dart';
-import 'dart:async';
 
 class CardsListPage extends StatefulWidget {
   final int regionCode;
@@ -52,7 +50,9 @@ class _CardsListPageState extends State<CardsListPage> {
               future: setRegion(widget.regionCode),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 switch (snapshot.connectionState) {
-                  case ConnectionState.waiting: return new Center(child: CircularProgressIndicator()); 
+                  case ConnectionState.waiting: return new Center(child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Color(0xff6fb165)),
+                  )); 
                   default: 
                     if(snapshot.hasError) {
                       return Center(child: Text('Error on fetching data. Try again'));        

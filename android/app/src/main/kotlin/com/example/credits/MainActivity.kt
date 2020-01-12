@@ -1,4 +1,4 @@
-package com.example.credits
+package zayem.bez.otkaza
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

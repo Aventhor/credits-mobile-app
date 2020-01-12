@@ -14,7 +14,7 @@ class CompanyCard extends StatelessWidget {
 
     Widget imageSection = Container(
       child: Image.asset(company.imgUrl, scale: 1, alignment: Alignment.center),
-      width: 80,
+      height: 80,
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5),
     );
 
@@ -23,18 +23,12 @@ class CompanyCard extends StatelessWidget {
      children: <Widget>[
        Expanded(
          child: Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
-           children: <Widget>[
-             Text(company.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Colors.lightGreen)),    
-             Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-             Text(company.creditRate, style: TextStyle(fontSize: 11))
-           ],
-         ),
-       ),
-       Expanded(
-         child: Column(
            children: <Widget>[     
-             Text(company.stocks, style: TextStyle(fontSize: 11), textAlign: TextAlign.end),
+             Container(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              color: Color(0xffe3f9df),
+              child: Text('Процентная ставка - ${company.creditRate}', style: TextStyle(fontSize: 12), textAlign: TextAlign.end),
+             ),
            ],
          ),
        ),
@@ -42,7 +36,7 @@ class CompanyCard extends StatelessWidget {
    );
 
    Widget bottomRow = Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
       Column(
         children: <Widget>[
@@ -68,27 +62,42 @@ class CompanyCard extends StatelessWidget {
     ],
   );
 
+  Widget actions = Container(
+    padding: EdgeInsets.symmetric(vertical: 5),
+    width: 180,
+    child: Center(
+      child: FlatButton(
+        color: Color(0xff6fb165),
+        textColor: Color(0xffffffff),
+        child: Text('Получить займ'),
+        padding: EdgeInsets.symmetric(horizontal: 2),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10)
+        ),
+        onPressed: () => onTapped(context, company.urlLink),
+      ),
+    )
+  );
+
     return new Card(
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       elevation: 4,
       child: new InkWell(
-        onTap: () => onTapped(context, company.urlLink, company.name),
+        onTap: () => onTapped(context, company.urlLink),
         
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-          child: Row(
+            child: Column(
             children: <Widget>[
-                imageSection,
-                Padding(padding: EdgeInsets.only(left: 5, right: 5)),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[    
-                      upperRow,
-                      Divider(color: Colors.black26),
-                      bottomRow,
-                    ],
-                  ),
-                ),
+              imageSection,
+              Padding(padding: EdgeInsets.only(left: 5, right: 5)),
+              upperRow,
+              Divider(color: Colors.black26),
+              Padding(
+                child: bottomRow,
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+              ),
+              actions
             ],
           ),  
         ),
@@ -96,10 +105,10 @@ class CompanyCard extends StatelessWidget {
     );
   }
 
-  Future<Null> onTapped(context, url, name) async {
+  Future<Null> onTapped(context, url) async {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => new WebViewPage(url, name))
+      MaterialPageRoute(builder: (context) => new WebViewPage(url))
     );
   }
   

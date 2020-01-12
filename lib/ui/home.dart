@@ -39,7 +39,6 @@ class _HomePageState extends State<HomePage> {
 
   setLocation() async {
     final countryCode = await getLocation();
-    print(countryCode);
 
     REGIONS_CODES.forEach((k,v) => {
       if (v == countryCode) {
@@ -51,9 +50,9 @@ class _HomePageState extends State<HomePage> {
     });
     if(_currentIndexPage == 0) {
       setState(() {
-        _currentIndexPage = 2; 
+        _currentIndexPage = 0; 
       });
-      cards = new CardsListPage(regionCode: 2);
+      cards = new CardsListPage(regionCode: 0);
     }
     return countryCode;
   }
@@ -99,7 +98,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget renderBody() {
     if(cards == null) {
-      return new Center(child: CircularProgressIndicator());
+      return new Center(child: CircularProgressIndicator(
+        valueColor: new AlwaysStoppedAnimation<Color>(Color(0xff6fb165)),
+      ));
     } else {
       return cards;
     }
